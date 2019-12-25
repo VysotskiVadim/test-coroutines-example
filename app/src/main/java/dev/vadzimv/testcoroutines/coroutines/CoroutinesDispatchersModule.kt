@@ -4,13 +4,24 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers
 
+object CustomCoroutinesDispatchers {
+    fun reset() {
+        Default = Dispatchers.Default
+        IO = Dispatchers.IO
+    }
+
+    var Default = Dispatchers.Default
+    var IO = Dispatchers.IO
+}
+
 @Module
 class CoroutinesDispatchersModule {
+
     @ComputationDispatcher
     @Provides
-    fun provideComputationDispatcher() = Dispatchers.Default
+    fun provideComputationDispatcher() = CustomCoroutinesDispatchers.Default
 
     @IODispatcher
     @Provides
-    fun provideIODispatcher() = Dispatchers.IO
+    fun provideIODispatcher() = CustomCoroutinesDispatchers.IO
 }

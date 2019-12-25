@@ -17,4 +17,7 @@ interface FeatureModule {
     @IntoMap
     @ViewModelKey(FeatureViewModel::class)
     fun bindFeatureViewModel(vm: FeatureViewModel): ViewModel
+
+    @Binds
+    fun bindUseCase(impl: FeatureUseCaseImpl): FeatureUseCase
 }
