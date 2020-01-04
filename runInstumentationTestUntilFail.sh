@@ -1,0 +1,1 @@
+while ./gradlew connectedDebugAndroidTest; do :; done

@@ -1,11 +1,11 @@
 package dev.vadzimv.testcoroutines.infra
 
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
+import java.lang.Runnable
 import java.util.*
 import kotlin.coroutines.CoroutineContext
+
+private const val ONE_FRAME = 17L
 
 class JobCheckingDispatcherWrapper(private val parent: CoroutineDispatcher) :
     CoroutineDispatcher() {
@@ -26,7 +26,12 @@ class JobCheckingDispatcherWrapper(private val parent: CoroutineDispatcher) :
 
     private fun addNewJob(job: Job): Boolean {
         job.invokeOnCompletion {
-            completionEvent?.invoke()
+            if (isAnyJobRunning.not()) {
+                GlobalScope.launch(Dispatchers.Main) {
+                    delay(ONE_FRAME * 2)
+                    completionEvent?.invoke()
+                }
+            }
         }
         return jobs.add(job)
     }

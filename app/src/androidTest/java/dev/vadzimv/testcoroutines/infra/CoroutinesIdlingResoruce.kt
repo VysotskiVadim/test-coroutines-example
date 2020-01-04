@@ -11,9 +11,7 @@ class CoroutinesIdlingResoruce(
 
     override fun registerIdleTransitionCallback(callback: IdlingResource.ResourceCallback) {
         dispatcher.completionEvent = {
-            if (dispatcher.isAnyJobRunning.not()) {
-                callback.onTransitionToIdle()
-            }
+            callback.onTransitionToIdle()
         }
     }
 }
