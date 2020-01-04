@@ -23,7 +23,7 @@ class FeatureTest {
         .around(ActivityTestRule(FeatureActivity::class.java))
 
     @Test
-    fun useAppContext() {
+    fun testDataUpdated() {
         onView(withId(R.id.textView)).check(matches(withText("boo")))
     }
 }
